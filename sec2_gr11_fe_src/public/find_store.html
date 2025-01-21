@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Create Map Sample | Longdo Map</title>
+    <link rel="stylesheet" href="/styles/Header_Footer.css" />
+    <link rel="stylesheet" href="/styles/Banner_pages.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style type="text/css">
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      div#map {
+        display: flex;
+        margin-left: auto;
+        right: 25%;
+        margin-top: 3%;
+      }
+      #map {
+        height: 50%;
+        width: 50%;
+      }
+    </style>
+    <script type="text/javascript" src="https://api.longdo.com/map3/?key=199cd971899dde4b509b5c73a6645d2d"></script>
+    <script>
+      var map;
+
+      // ข้อมูลตำแหน่งที่ต้องการเพิ่ม marker
+      var locations = [
+        {
+          lat: 13.876445303399768,
+          lon: 100.41237761615398,
+          title: "Puma Central Westgate",
+          detail: "Unit No. 166, 1st Floor, 3 ถ. กาญจนาภิเษก ตำบล เสาธงหิน อำเภอบางใหญ่ นนทบุรี 11140",
+        },
+        {
+          lat: 13.747188253415208,
+          lon: 100.53910080844432,
+          title: "PUMA Central Worlds",
+          detail: "999/9 ถ. พระรามที่ 1 แขวงปทุมวัน เขตปทุมวัน กรุงเทพมหานคร 10330",
+        },
+        {
+          lat: 13.730115895608165,
+          lon: 100.56881935056879,
+          title: "PUMA Emporium ",
+          detail: "The Emporium,ถ. สุขุมวิท แขวงคลองตัน เขตคลองเตย กรุงเทพมหานคร 10110",
+        },
+        {
+          lat: 13.636522850234432,
+          lon: 100.74573741779626,
+          title: "PUMA Central Village ",
+          detail: "ถนน สุวรรณภูมิ 3 ตำบลบางโฉลง อำเภอบางพลี สมุทรปราการ 10540",
+        },
+        {
+          lat: 13.766882967049643,
+          lon: 100.64335140951641,
+          title: "PUMA The Mall Bangkapi ",
+          detail: "ถ. ลาดพร้าว Klongjun, เขตบางกะปิ กรุงเทพมหานคร 10240",
+        },
+        {
+          lat: 13.825858612305645,
+          lon: 100.67923948505329,
+          title: "Puma Fashion Island",
+          detail: "587, 589, 589/7-9 ถ. รามอินทรา แขวงคันนายาว เขตคันนายาว กรุงเทพมหานคร 10230",
+        },
+      ];
+
+      function init() {
+        // ตรวจสอบว่า Longdo Map โหลดแล้วหรือยัง
+        if (typeof longdo === "undefined") {
+          alert("Longdo Map API ไม่สามารถโหลดได้");
+          return;
+        }
+        // สร้างแผนที่
+        map = new longdo.Map({
+          placeholder: document.getElementById("map"),
+          zoom: 10,
+          location: {
+            lon: 100.50190375230022,
+            lat: 13.757301796667345,
+          },
+        });
+
+        // เพิ่ม marker ทุกตำแหน่งใน locations
+        map.Event.bind(longdo.EventName.Ready, function () {
+          locations.forEach(function (location) {
+            var marker = new longdo.Marker(
+              {lon: location.lon, lat: location.lat},
+              {
+                title: location.title,
+                detail: location.detail,
+              }
+            );
+            map.Overlays.add(marker); // เพิ่ม marker ลงบนแผนที่
+          });
+        });
+      }
+    </script>
+  </head>
+  <body onload="init();">
+    <header>
+      <div class="logo">
+        <a name="logo" href="/homepage"><img src="/Assets/Logo/Logo.png" alt="" /></a>
+      </div>
+      <div class="shipping-text">
+        <p style="font-size: 14.5px">Deliver to</p>
+        <p>THAILAND</p>
+      </div>
+      <div class="search">
+        <input class="search-box" type="text" placeholder="Searching for Something that you interesting !!" />
+        <a href="/Advance_search">
+          <button class="search-btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </a>
+      </div>
+
+      <div class="login">
+        <a href="/Our_store" style="text-align: center">Find Our Stores</a>
+        <a href="/login" style="text-align: center">Login</a>
+      </div>
+    </header>
+
+    <nav>
+      <ul>
+        <li>
+          <a href="/homepage">Home</a>
+        </li>
+        <li class="">
+          <a href="/products">Product</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Shirt">Shirt</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Sneaker">Sneaker</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Hat">Hat</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Running">Running</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Football">Football</a>
+        </li>
+        <li class="">
+          <a href="/about_us">About us</a>
+        </li>
+        <li class="Shopping-Cart">
+          <i class="fa fa-shopping-cart" style="font-size: 20px"></i> CART
+          <div class="order-details">
+            <div class="arrow-up"></div>
+            <p class="Lasted">Lasted Product</p>
+            <div class="Product-Cart">
+              <div class="Product-img">
+                <img src="/Assets/Product/รองเท้าผ้าใบ-Rebound-V6-Lo-Youth.avif" alt="" />
+              </div>
+              <div class="Product-name">
+                <p>Rebound V6 Lo Youth</p>
+              </div>
+              <div class="Product-Price">
+                <p name="price">฿3200</p>
+              </div>
+            </div>
+            <div class="Product-Cart">
+              <div class="Product-img">
+                <img src="/Assets/Product/รองเท้าผ้าใบ-Rebound-V6-Lo-Youth.avif" alt="" />
+              </div>
+              <div class="Product-name">
+                <p>Hood PUMA FIT Move</p>
+              </div>
+              <div class="Product-Price">
+                <p name="price">฿2500</p>
+              </div>
+            </div>
+            <div class="Product-Cart">
+              <div class="Product-img">
+                <img src="/Assets/Product/รองเท้าผ้าใบ-Rebound-V6-Lo-Youth.avif" alt="" />
+              </div>
+              <div class="Product-name">
+                <p>PUMA LOVELY PUMA</p>
+              </div>
+              <div class="Product-Price">
+                <p name="price">฿1900</p>
+              </div>
+            </div>
+            <button>SEE MORE ITEMS</button>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <section class="Banner_Page">
+      <h1>FIND OUR STORES</h1>
+    </section>
+    <div id="map"></div>
+    <footer>
+      <h2>© Copyright by Group 11 Section 2</h2>
+      <h3><a href="/about_us">Contact Our team Click here</a></h3>
+    </footer>
+  </body>
+</html>

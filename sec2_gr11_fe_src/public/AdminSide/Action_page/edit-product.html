@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/AdminSide/CSS/sidebar_els.css">
+    <link rel="stylesheet" href="/AdminSide/Action_page/CSS/Add-product.css">
+    <link rel="stylesheet"
+      href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/AdminSide/CSS/container.css">
+
+    <title>Edit Product</title>
+  </head>
+  <body>
+    <nav class="container-sidebar">
+      <div class="sidebar">
+        <div class="title">
+          <img src="LOGO.png" alt="PUMA LOGO" />
+          <p>PUMA DASHBOARD</p>
+        </div>
+        <hr />
+        <div class="title-page">
+          <p>MENU</p>
+        </div>
+        <div class="mega-list">
+          <div class="list-component">
+            <i class="icon ph-bold ph-house"></i>
+            <p>Dashboard</p>
+          </div>
+          <div class="sub-list-component">
+            <a href="/AdminSide/Dashboard">Homepage</a>
+          </div>
+        </div>
+        <div class="mega-list">
+          <div class="list-component">
+            <i class="icon ph-bold ph-user"></i>
+            <p>Account Management</p>
+          </div>
+          <div class="sub-list-component">
+            <a href="/AdminSide/Admin_Info">All Admin</a>
+          </div>
+          <div class="sub-list-component">
+            <a href="/AdminSide/Search_Admin">Search Admin</a>
+          </div>
+        </div>
+        <div class="mega-list">
+          <div class="list-component">
+            <i class="icon ph-bold ph-chart-bar"></i>
+
+            <p>Product Management</p>
+          </div>
+          <div class="sub-list-component">
+            <a href="/AdminSide/Product_Info">All Product</a>
+          </div>
+          <div class="sub-list-component">
+            <a href="/AdminSide/Search_Product">Search Product</a>
+          </div>
+        </div>
+        <div class="exit">
+          <i class="icon ph-bold ph-sign-out"></i>
+          <a href="/login">Logout</a>
+        </div>
+      </div>
+    </nav>
+    <section class="container">
+      <div class="title-main">
+      </div>
+      <div class="content-container">
+        <div class="header-content">
+          <div class="title">
+            Edit Product Element
+          </div>
+          <div class="back-button">
+            <a href="/AdminSide/Product_Info"><button>Back</button></a>
+          </div>
+        </div>
+        <form id="addProduct" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="productname">Product Name</label>
+            <input name="productname" type="text" id="productname"
+              placeholder="Enter ProductName">
+            <label for="producttype">Product Type</label>
+            <select id="producttype"
+              style="height:44px; width:35%; border-radius:12px;">
+              <option selected disabled>select product type</option>
+              <option value="Sneaker">Sneaker</option>
+              <option value="Shirt">Shirt</option>
+              <option value="Hat"> Hat</option>
+              <option value="Running">Running</option>
+              <option value="Football">Football</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="productprice">Product Price</label>
+            <input name="productprice" type="text" id="productprice"
+              placeholder="Enter ProductPrice">
+            <label for="Collection">Collection</label>
+            <select id="productcollection"
+              style="height:44px; width:35%; border-radius:12px;">
+              <option selected disabled>select collection</option>
+              <option value="Summer">Summer</option>
+              <option value="Rainny">Rainny</option>
+              <option value="Winter">Winter</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Gender</label>
+            <div class="gender-options">
+              <label><input type="radio" id="gender" name="gender" value="M">
+                Male</label>
+              <label><input type="radio" id="gender" name="gender" value="F">
+                Female</label>
+              <label><input type="radio" id="gender" name="gender" value="U">
+                Unisex</label>
+            </div>
+            <label for="productdescrition">Product Description</label>
+            <input name="productdescription" type="text" id="productdescription"
+              placeholder="Enter Product Description">
+          </div>
+          <div class="form-group">
+            <div class="profile-picture">
+              <img src="https://via.placeholder.com/100" id="preview" src
+                alt="Image Preview">
+              <input type="file" id="imageUpload" name="profile_image"
+                accept="image/*"
+                style="padding: 10px 20px;background-color: #007bff;color: #fff;border: none;border-radius: 5px;cursor: pointer;">
+            </div>
+          </div>
+          <div class="btn-action-group">
+            <button type="submit" class="Create_btn">EDIT PRODUCT</button>
+          </div>
+        </form>
+      </section>
+
+      <script src="https://unpkg.com/@phosphor-icons/web"></script>
+      <script>
+    const imageUpload = document.getElementById('imageUpload');
+    const preview = document.getElementById('preview');
+
+    imageUpload.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+<script>
+  const urlParams = new URLSearchParams(window.location.search); // ดึง query parameters จาก URL
+  const Product_ID = urlParams.get("Product_ID"); // ดึงค่า Admin_ID จาก URL
+  const token = localStorage.getItem("token");
+  if (Product_ID) {
+    showProductWS_WithID(Product_ID,token); // เรียกฟังก์ชันพร้อมส่ง Admin_ID
+} else {
+    alert("Product_ID is missing from the URL."); // แจ้งเตือนหากไม่มี Admin_ID
+}
+  async function showProductWS_WithID(Product_ID,token){
+    const response = await fetch(`http://localhost:5001/api_service/showProduct/${Product_ID}`,{
+      method:"GET",
+      headers:{
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    if(!response.ok){
+      alert("Failed to fetch product Data");
+    }
+    const data = await response.json();
+    console.log(data.data[0])
+    if(data.success){
+      fillForm(data.data[0]); // สมมติว่า API ส่ง `data` กลับมาใน `data`
+    }else{
+      alert("No product Data found")
+    }
+  }
+  function fillForm(productData){
+    document.getElementById("productname").value = productData.product_name;
+    document.getElementById("producttype").value = productData.product_type; // เปลี่ยนจาก product_name เป็น product_type
+    document.getElementById("productcollection").value = productData.product_collection; // เปลี่ยนให้ตรงกับข้อมูล
+    document.getElementById("productprice").value = productData.product_price; // เปลี่ยนให้ตรงกับข้อมูล
+    if (productData.gender === "M") { // เปลี่ยน Gender ให้ตรงกับ field
+      document.querySelector("input[name='gender'][value='M']").checked = true;
+    } else if (productData.gender === "F") {
+      document.querySelector("input[name='gender'][value='F']").checked = true;
+    } else if (productData.gender === "U") {
+      document.querySelector("input[name='gender'][value='U']").checked = true;
+    }
+    document.getElementById("productdescription").value = productData.product_description; // แก้ให้ตรงกับ field product_description
+    const preview = document.getElementById("preview");
+    preview.src = `http://localhost:5001/upload/${productData.image}`;
+}
+async function productDataUpdateWS(productID, token, url, DataUpdate) {
+  const formData = new FormData();
+
+  // Append only the fields that are provided in DataUpdate
+      formData.append("product_name", DataUpdate.product_name);
+      formData.append("product_type", DataUpdate.product_type);
+      formData.append("product_price", DataUpdate.product_price);
+      formData.append("product_collection", DataUpdate.product_collection);
+      formData.append("gender", DataUpdate.gender);
+      formData.append("product_description", DataUpdate.product_description);
+      formData.append("image", DataUpdate.image); // Image file if provided
+  const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+          Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+  });
+
+  const data = await response.json();
+  if (data.success) {
+      alert("Product updated successfully!");
+      return data;
+  } else {
+      alert(`Failed to update product: ${data.message}`);
+  }
+}
+
+// Add an event listener to your Update button
+document.querySelector(".Create_btn").addEventListener("click", async (event) => {
+  event.preventDefault(); // Prevent form submission
+
+  const token = localStorage.getItem("token");
+  const productID = new URLSearchParams(window.location.search).get("Product_ID");
+  const url = `http://localhost:5001/api_service/UpdateProduct/${productID}`;
+
+  const dataUpdate = {
+      product_name: document.getElementById("productname").value,
+      product_type: document.getElementById("producttype").value,
+      product_price: document.getElementById("productprice").value,
+      product_collection: document.getElementById("productcollection").value,
+      gender: document.querySelector("input[name='gender']:checked")?.value,
+      product_description: document.getElementById("productdescription").value,
+      image: document.getElementById("imageUpload").files[0], // Image file if updated
+  };
+
+  const result = await productDataUpdateWS(productID, token, url, dataUpdate);
+  if (result) {
+      window.location.href = "/AdminSide/Product_Info"; // Redirect to product info page
+  }
+});
+
+</script>
+    </body>
+  </html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PUMA-SHOP</title>
+    <link rel="stylesheet" href="/styles/Header_Footer.css" />
+    <link rel="stylesheet" href="/styles/Banner_pages.css" />
+    <link rel="stylesheet" href="/styles/Show_Product.css" />
+    <!----Icon Library----->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style></style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <a name="logo" href="/homepage"><img src="/Assets/Logo/Logo.png" alt="" /></a>
+      </div>
+      <div class="shipping-text">
+        <p style="font-size: 14.5px">Deliver to</p>
+        <p>THAILAND</p>
+      </div>
+      <div class="search">
+        <input class="search-box" type="text" placeholder="Searching for Something that you interesting !!" />
+        <a href="/Advance_search">
+          <button class="search-btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </a>
+      </div>
+      <div class="login">
+        <a href="/Our_store" style="text-align: center">Find Our Stores</a>
+        <a href="/login" style="text-align: center">Login</a>
+      </div>
+    </header>
+    <nav>
+      <ul>
+        <li>
+          <a href="/homepage">Home</a>
+        </li>
+        <li class="">
+          <a href="/products">Product</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Shirt">Shirt</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Sneaker">Sneaker</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Hat">Hat</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Running">Running</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Football">Football</a>
+        </li>
+        <li class="">
+          <a href="/about_us">About us</a>
+        </li>
+        <li class="Shopping-Cart">
+          <i class="fa fa-shopping-cart" style="font-size: 20px"></i> CART
+          <div class="order-details">
+            <div class="arrow-up"></div>
+            <p class="Lasted">Lasted Product</p>
+            <div class="Product-Cart">
+              <div class="Product-img">
+                <img src="./Assets/Product/รองเท้าผ้าใบ-Rebound-V6-Lo-Youth.avif" alt="" />
+              </div>
+              <div class="Product-name">
+                <p>Rebound V6 Lo Youth</p>
+              </div>
+              <div class="Product-Price">
+                <p name="price">฿3200</p>
+              </div>
+            </div>
+            <div class="Product-Cart">
+              <div class="Product-img">
+                <img src="./Assets/Product/รองเท้าผ้าใบ-Rebound-V6-Lo-Youth.avif" alt="" />
+              </div>
+              <div class="Product-name">
+                <p>Hood PUMA FIT Move</p>
+              </div>
+              <div class="Product-Price">
+                <p name="price">฿2500</p>
+              </div>
+            </div>
+            <div class="Product-Cart">
+              <div class="Product-img">
+                <img src="./Assets/Product/รองเท้าผ้าใบ-Rebound-V6-Lo-Youth.avif" alt="" />
+              </div>
+              <div class="Product-name">
+                <p>PUMA LOVELY PUMA</p>
+              </div>
+              <div class="Product-Price">
+                <p name="price">฿1900</p>
+              </div>
+            </div>
+            <button>SEE MORE ITEMS</button>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <section class="Banner_Page">
+      <h1 id="title_productType">Product</h1>
+    </section>
+
+    <section class="products-container">
+      <div class="box">
+        <div class="image">
+          <img src="/Assets/Product/Product-Release/CA-Pro-Classic.avif" />
+        </div>
+        <div class="info">
+          <h2 class="title">Product name</h2>
+          <div class="subinfo">
+            <div class="price">฿3200</div>
+          </div>
+        </div>
+        <div class="buy-btn">
+          <a href="/detail_product" class="button">BUY</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <h2>© Copyright by Group 11 Section 2</h2>
+      <h3><a href="/about_us">Contact Our team Click here</a></h3>
+    </footer>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // ดึงค่า product_type จาก URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const productType = urlParams.get("Product_type");
+      console.log(productType);
+
+      // สร้าง URL สำหรับ Fetch
+      let fetchUrl = "http://localhost:5001/api_service/showProduct";
+
+      if (productType) {
+        document.getElementById("title_productType").textContent = `Product Type: ${productType}`;
+        fetchUrl = `http://localhost:5001/api_service/showProduct/type/${productType}`;
+      }
+
+      console.log("Fetch URL:", fetchUrl);
+
+      // เรียก API
+      fetch(fetchUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch products");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const productsContainer = document.querySelector(".products-container");
+          productsContainer.innerHTML = ""; // Clear the container
+          //ใช้ Condition check สิ่งที่ส่งมาจาก Json ( ขี้เกียยจไปแก้ WS ถ้าแก้มันต้องแก้ page อื่นเลยยใช้วิธีนี้ )
+          let fetchData = data.results;
+          if (productType) {
+            fetchData = data.data;
+          }
+          console.log(fetchData[0]);
+
+          // ตรวจสอบผลลัพธ์
+          if (!fetchData || fetchData.length === 0) {
+            productsContainer.innerHTML = "<p>No products found.</p>";
+            return;
+          }
+          fetchData.forEach((product) => {
+            const productBox = document.createElement("div");
+            productBox.classList.add("box");
+
+            productBox.innerHTML = `
+              <div class="image">
+                <img src="${`http://localhost:5001/upload/${product.image}`}" alt="${product.product_name}" />
+              </div>
+              <div class="info">
+                <h2 class="title">${product.product_name}</h2>
+                <div class="subinfo">
+                  <div class="price">฿${product.product_price}</div>
+                </div>
+              </div>
+              <div class="buy-btn">
+                <a href="/detail_product?Product_ID=${product.product_ID}" class="button">Buy</a>
+              </div>
+            `;
+
+            productsContainer.appendChild(productBox);
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching products:", error);
+          const productsContainer = document.querySelector(".products-container");
+          productsContainer.innerHTML = "<p>Error loading products. Please try again later.</p>";
+        });
+    });
+  </script>
+</html>

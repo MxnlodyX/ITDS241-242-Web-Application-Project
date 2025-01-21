@@ -1,0 +1,171 @@
+/* Global reset */
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+
+
+body {
+    height: 100%;
+    /* Ensure body takes up full height */
+    display: flex;
+}
+
+.container-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 100vh;
+    /* Sidebar takes up full height of the viewport */
+    background: #404E67;
+    position: relative;
+}
+
+.container-sidebar .sidebar {
+    position: absolute;
+}
+
+.title-page {
+    font-weight: bold;
+}
+
+.container-sidebar .sidebar .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.sidebar .title img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.container-sidebar .title {
+    margin: 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.container-sidebar hr {
+    margin: 20px;
+    width: 200px;
+}
+
+.title-page {
+    color: white;
+    margin: 20px;
+}
+
+.mega-list {
+    margin-bottom: 20px;
+}
+
+.list-component {
+    margin-left: 20px;
+    color: rgb(255, 241, 241);
+    display: flex;
+    font-weight: bold;
+    gap: 20px;
+}
+
+.sub-list-component {
+    display: flex;
+    margin-top: 10px;
+    flex-direction: column;
+    margin-left: 70px;
+}
+
+.sub-list-component a {
+    color: rgba(255, 255, 255, 0.952);
+    margin: 5px;
+    text-decoration: none;
+}
+
+.sub-list-component a:hover {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    transition: 0.1s;
+}
+
+
+.exit {
+    margin-left: 20px;
+    position: relative;
+    top: 5vh;
+    color: white;
+}
+
+.exit a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+i {
+    font-size: 25px;
+}
+
+.top-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #edf4ff;
+    box-shadow: inset 0px 4px 10px rgba(0, 0, 0, 0.2);
+
+}
+
+.top-bar .title-dash {
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+}
+
+.top-bar .login-info {
+    color: rgb(0, 0, 0);
+    display: flex;
+    gap: 25px;
+
+}
+
+.top-bar .img-person {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+
+}
+
+.top-bar .img-person img {
+    object-fit: cover;
+    object-position: top;
+
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.top-bar .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info .name {
+    font-weight: bold;
+}
+
+.info .role {
+    color: rgb(89, 93, 116);
+}
+
+.info img {
+    width: 20px;
+    height: 20px;
+}

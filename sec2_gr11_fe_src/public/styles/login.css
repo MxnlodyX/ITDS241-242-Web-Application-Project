@@ -1,0 +1,90 @@
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+
+}
+
+.wrapper{
+    width: 420px;
+    background-color: rgb(82, 83, 153);
+    border-radius: 10px;
+    padding: 30px 40px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+.wrapper h1{
+    font-size: 36px;
+    text-align: center;
+    color: white;
+
+
+}
+
+.wrapper .input-box{
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+    
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: #eee;
+    border: 2px solid white;
+    border-radius: 40px;
+    padding: 20px 45px 20px 20px;
+}
+
+.input-box input::placeholder{
+    color: #333;
+}
+
+.input-box i{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.login-btn{
+    display: flex;
+    justify-content: center;
+}
+.login-btn button{
+    padding: 10px;
+    background-color: rgb(101, 181, 255);
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+.wrapper .register-link{
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+}
+
+.register-link p a{
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+
+}
+.register-link p a:hover{
+    color: rgb(255, 154, 87);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+
+
+}
+label {
+    font-weight: 600;
+    padding: 30px 0px 10px 20px;
+    font-size: 30;
+    color: white;
+}

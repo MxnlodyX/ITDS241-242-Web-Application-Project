@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/AdminSide/CSS/sidebar_els.css">
+  <link rel="stylesheet" href="/AdminSide/Action_page/CSS/Add-product.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="/AdminSide/CSS/container.css">
+
+
+  <title>Add Product</title>
+</head>
+
+<body>
+  <nav class="container-sidebar">
+    <div class="sidebar">
+      <div class="title">
+        <img src="LOGO.png" alt="PUMA LOGO" />
+        <p>PUMA DASHBOARD</p>
+      </div>
+      <hr />
+      <div class="title-page">
+        <p>MENU</p>
+      </div>
+      <div class="mega-list">
+        <div class="list-component">
+          <i class="icon ph-bold ph-house"></i>
+          <p>Dashboard</p>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Dashboard">Homepage</a>
+        </div>
+      </div>
+      <div class="mega-list">
+        <div class="list-component">
+          <i class="icon ph-bold ph-user"></i>
+          <p>Account Management</p>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Admin_Info">All Admin</a>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Search_Admin">Search Admin</a>
+        </div>
+      </div>
+      <div class="mega-list">
+        <div class="list-component">
+          <i class="icon ph-bold ph-chart-bar"></i>
+
+          <p>Product Management</p>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Product_Info">All Product</a>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Search_Product">Search Product</a>
+        </div>
+      </div>
+      <div class="exit">
+        <i class="icon ph-bold ph-sign-out"></i>
+        <a href="/login">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <section class="container">
+    <div class="title-main">
+    </div>
+    <div class="content-container">
+      <div class="header-content">
+        <div class="title">
+          Add Product Element
+        </div>
+        <div class="back-button">
+          <a href="/AdminSide/Product_Info"><button>Back</button></a>
+        </div>
+      </div>
+      <form id="addProduct" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="productname">Product Name</label>
+          <input name="productname" type="text" id="productname" placeholder="Enter ProductName">
+          <label for="producttype">Product Type</label>
+          <select id="producttype" style="height:44px; width:35%; border-radius:12px;">
+            <option selected disabled>select product type</option>
+            <option value="Sneaker">Sneaker</option>
+            <option value="Shirt">Shirt</option>
+            <option value="Hat"> Hat</option>
+            <option value="Running">Running</option>
+            <option value="Football">Football</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="productprice">Product Price</label>
+          <input name="productprice" type="text" id="productprice" placeholder="Enter ProductPrice">
+          <label for="Collection">Collection</label>
+          <select id="productcollection" style="height:44px; width:35%; border-radius:12px;" required>
+            <option selected disabled>select collection</option>
+            <option value="Summer">Summer</option>
+            <option value="Rainny">Rainny</option>
+            <option value="Winter">Winter</option>
+        </select>
+        </div>
+        <div class="form-group">
+          <label>Gender</label>
+          <div class="gender-options">
+            <label><input type="radio" id="gender" name="gender" value="M"> Male</label>
+            <label><input type="radio" id="gender" name="gender" value="F"> Female</label>
+            <label><input type="radio" id="gender" name="gender" value="U"> Unisex</label>
+          </div>
+          <label for="productdescrition">Product Description</label>
+          <input name="productdescription" type="text" id="productdescription" placeholder="Enter Product Description">
+        </div>
+        <div class="form-group">
+          <div class="profile-picture">
+            <img src="https://via.placeholder.com/100" id="preview" src="" alt="Image Preview">
+            <input type="file" id="imageUpload" name="product_image" accept="image/*"  style="padding: 10px 20px;background-color: #007bff;color: #fff;border: none;border-radius: 5px;cursor: pointer;" required>
+          </div>
+        </div>
+        <div class="btn-action-group">
+          <button type="submit" class="Create_btn">CREATE PRODUCT</button>
+        </div>
+      </form>
+  </section>
+
+
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script>
+    const imageUpload = document.getElementById('imageUpload');
+    const preview = document.getElementById('preview');
+
+    imageUpload.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+  <script>
+
+    async function productDataInsertWS(token, url, datasent) {
+  
+      const formData = new FormData();
+      // เพิ่มข้อมูลลงใน FormData
+      formData.append("product_name", datasent.product_name);
+      formData.append("product_type", datasent.product_type);
+      formData.append("product_price", datasent.product_price);
+      formData.append("product_collection", datasent.product_collection);
+      formData.append("product_gender", datasent.product_gender);
+      formData.append("product_description", datasent.product_description);
+      formData.append("product_image", datasent.product_image);
+      let response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+  
+      const data = await response.json();
+      if (data.success) {
+        alert("Add Product successfully!");
+        return data; 
+      } else {
+        alert(`Failed to Add Product: ${data.message}`);
+        return null; 
+      }
+    }
+  
+    document.querySelector(".Create_btn").addEventListener("click", async (event) => {
+      event.preventDefault(); // ป้องกัน default form submit
+  
+      const token = localStorage.getItem("token");
+      const url = "http://localhost:5001/api_service/addProduct";
+  
+      const datasent = {
+        product_name: document.getElementById("productname").value,
+        product_type: document.getElementById("producttype").value,
+        product_collection: document.getElementById("productcollection").value,
+        product_price: document.getElementById("productprice").value,
+        product_gender: document.querySelector("input[name='gender']:checked")?.value,
+        product_description: document.getElementById("productdescription").value,
+        product_image: document.getElementById("imageUpload").files[0],
+      };
+     
+      const result = await productDataInsertWS(token, url, datasent);
+  
+      if (result) {
+        window.location.href = "/AdminSide/Product_Info";
+      }
+    });
+  </script>
+</body>
+
+</html>

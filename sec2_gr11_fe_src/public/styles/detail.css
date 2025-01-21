@@ -1,0 +1,66 @@
+.detail {
+    column-count: 2;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    margin-left: 12%;
+    margin-right: 12%;
+    height: 100vh;
+}
+
+.picture {
+    width: 500px;
+    height: 400px;
+}
+
+.photo {
+    margin-top: 100px;
+    width: 50%;
+}
+
+.choosedetail {
+    margin-top: 60px;
+    margin-left: 100px;
+    font-size: 25px;
+    font-weight: 900px;
+}
+
+button {
+    background-color: gray;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:active {
+    background-color: #dbf740;
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.addtocart {
+    background-color: rgb(255, 217, 2) !important;
+}
+
+select {
+    width: 50px;
+}
+
+.choosedetail p {
+    margin: 20px;
+}
+
+.title_description {
+    margin-top: 5%;
+    font-size: 25px;
+}
+
+#productdescription {
+    margin-top: 15px;
+    font-size: 20px;
+}

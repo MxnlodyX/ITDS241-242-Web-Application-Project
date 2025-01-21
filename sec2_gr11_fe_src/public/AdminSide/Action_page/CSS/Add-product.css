@@ -1,0 +1,88 @@
+.form-group {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: center;
+    gap: 15px;
+}
+
+.form-group label {
+    width: 120px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input[type="text"] {
+    width: 40%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.gender-options {
+    display: flex;
+    gap: 10px;
+}
+
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.button-group button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.btn-action-group {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.btn-action-group button {
+    color: white;
+    font-weight: bold;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+}
+
+.btn-action-group .Create_btn {
+    background: linear-gradient(to right, #0ac282, #0df3a3);
+}
+
+.profile-picture {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 5%;
+}
+
+.profile-picture img {
+    width: 200px;
+    height: 170px;
+    margin-bottom: 10px;
+    background-color: #0000004a
+}
+
+.profile-picture button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+select.collection {
+    width: 30%;
+    padding: 10px;
+    border: 1px solid rgb(199, 198, 198);
+    border-radius: 5px;
+}

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PUMA-SHOP</title>
+    <link rel="stylesheet" href="/styles/Header_Footer.css" />
+    <link rel="stylesheet" href="/styles/Banner_pages.css" />
+    <link rel="stylesheet" href="/styles/detail.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <a name="logo" href="/homepage"><img src="/Assets/Logo/Logo.png" alt="" /></a>
+      </div>
+      <div class="shipping-text">
+        <p style="font-size: 14.5px">Deliver to</p>
+        <p>THAILAND</p>
+      </div>
+      <div class="search">
+        <input class="search-box" type="text" placeholder="Searching for Something that you interesting !!" />
+        <a href="/Advance_search">
+          <button class="search-btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </a>
+      </div>
+
+      <div class="login">
+        <a href="/Our_store" style="text-align: center">Find Our Stores</a>
+        <a href="/login" style="text-align: center">Login</a>
+      </div>
+    </header>
+
+    <nav>
+      <ul>
+        <li>
+          <a href="/homepage">Home</a>
+        </li>
+        <li class="">
+          <a href="/products">Product</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Shirt">Shirt</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Sneaker">Sneaker</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Hat">Hat</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Running">Running</a>
+        </li>
+        <li class="">
+          <a href="/products?Product_type=Football">Football</a>
+        </li>
+        <li class="">
+          <a href="/about_us">About us</a>
+        </li>
+        <li class="Shopping-Cart">
+          <i class="fa fa-shopping-cart" style="font-size: 20px"></i>
+          CART
+          <div class="order-details">
+            <div class="arrow-up"></div>
+            <p class="Lasted">Lasted Product</p>
+            <div class="Product-Cart">
+              <div class="Product-img">
+                <img src="/Assets/Product/รองเท้าผ้าใบ-Rebound-V6-Lo-Youth.avif" alt="" />
+              </div>
+              <div class="Product-name">
+                <p>Rebound V6 Lo Youth</p>
+              </div>
+              <div class="Product-Price">
+                <p name="price">฿3200</p>
+              </div>
+            </div>
+            <div class="Product-Cart">
+              <div class="Product-img">
+                <img src="/Assets/Product/รองเท้าผ้าใบ-Rebound-V6-Lo-Youth.avif" alt="" />
+              </div>
+              <div class="Product-name">
+                <p>Hood PUMA FIT Move</p>
+              </div>
+              <div class="Product-Price">
+                <p name="price">฿2500</p>
+              </div>
+            </div>
+            <div class="Product-Cart">
+              <div class="Product-img">
+                <img src="/Assets/Product/รองเท้าผ้าใบ-Rebound-V6-Lo-Youth.avif" alt="" />
+              </div>
+              <div class="Product-name">
+                <p>PUMA LOVELY PUMA</p>
+              </div>
+              <div class="Product-Price">
+                <p name="price">฿1900</p>
+              </div>
+            </div>
+            <button>SEE MORE ITEMS</button>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <div class="detail">
+      <div class="photo">
+        <img src="https://via.placeholder.com/100" id="preview" class="picture" alt="Image Preview" />
+        <p class="title_description">Product Description</p>
+        <p id="productdescription"></p>
+      </div>
+      <div class="choosedetail">
+        <p>All/<span id="producttype">Category name</span></p>
+        <p id="productname">Product name</p>
+        <p id="productprice">99.99$</p>
+        <p>Color selection</p>
+        <button>White</button>
+        <button>Black</button>
+        <button>Blue</button>
+        <button>Green</button>
+        <button>Black</button>
+        <p>Size selection</p>
+        <button>XS</button>
+        <button>S</button>
+        <button>M</button>
+        <button>L</button>
+        <button>XL</button>
+        <button>XXL</button>
+        <p>Quantity</p>
+        <select>
+          <option value="option1">1</option>
+          <option value="option2">2</option>
+          <option value="option3">3</option>
+        </select>
+        <button class="addtocart">Add to Cart</button>
+      </div>
+    </div>
+    <footer>
+      <h2>© Copyright by Group 11 Section 2</h2>
+      <h3><a href="/about_us">Contact Our team Click here</a></h3>
+    </footer>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search); // ดึง query parameters จาก URL
+      const Product_ID = urlParams.get("Product_ID"); // ดึงค่า Admin_ID จาก URL
+      const token = localStorage.getItem("token");
+      if (Product_ID) {
+        showProductWS_WithID(Product_ID, token);
+      } else {
+        alert("Product_ID is missing from the URL.");
+      }
+      async function showProductWS_WithID(Product_ID, token) {
+        const response = await fetch(`http://localhost:5001/api_service/showProduct/${Product_ID}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          alert("Failed to fetch product Data");
+        }
+
+        const data = await response.json();
+        console.log(data.data[0]);
+        if (data.success) {
+          fillForm(data.data[0]);
+        } else {
+          alert("No product Data found");
+        }
+      }
+      function fillForm(productData) {
+        document.getElementById("preview").src = `http://localhost:5001/upload/${productData.image}`;
+        document.getElementById("productname").textContent = productData.product_name;
+        document.getElementById("productprice").textContent = `$ ${productData.product_price}`;
+        document.getElementById("producttype").textContent = `Category: ${productData.product_type}`;
+        document.getElementById("productdescription").textContent = productData.product_description;
+      }
+    </script>
+  </body>
+</html>

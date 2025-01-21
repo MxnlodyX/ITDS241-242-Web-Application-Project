@@ -1,0 +1,135 @@
+.advance-search {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+    width: 100%;
+}
+
+.form-search {
+    background-color: rgb(255, 255, 255);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid black;
+}
+
+.form-input {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10%;
+    align-items: center;
+}
+
+.form-input label.title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 25px;
+}
+
+.form-input input[type="text"] {
+    padding: 10px;
+    border-radius: 10px;
+
+}
+
+.form-input input[type="radio"] {
+    transform: scale(1.5);
+    margin-right: 5px;
+}
+
+.form-input select {
+    padding: 10px;
+    border-radius: 10px;
+    width: 40%;
+}
+
+.select-info {
+    margin-right: 15px;
+    font-size: 15px;
+}
+
+.filter-option {
+    gap: 15px;
+    font-size: 16px;
+}
+
+.filter-option input {
+    margin-left: 20px;
+
+}
+
+.button-search {
+    display: flex;
+    justify-content: center;
+}
+
+.button-search button {
+    padding: 15px;
+    border-radius: 15px;
+    border: none;
+    background-color: rgb(107, 184, 255);
+    color: white;
+    cursor: pointer;
+}
+
+.fetch-product-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5%;
+    margin-top: 5%;
+    width: 100%;
+}
+
+.box {
+    width: 225px;
+    height: 350px;
+    border: 1px solid black;
+    border-radius: 5%;
+    overflow: hidden;
+    margin-bottom: 2%;
+}
+
+img {
+    border-radius: 0.5em;
+}
+
+.box img {
+    height: 225px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.box .info {
+    margin: 15px;
+}
+
+.box .info .title {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.box .info .subinfo .price {
+    font-size: 1.2em;
+    color: #333;
+}
+
+.buy-btn .button {
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    background-color: rgb(26, 30, 241);
+    border-radius: 20%;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.buy-btn button:hover {
+    background-color: rgb(47, 224, 23);
+    transition: 0.5s;
+
+}

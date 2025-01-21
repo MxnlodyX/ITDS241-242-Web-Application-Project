@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/AdminSide/CSS/sidebar_els.css">
+    <link rel="stylesheet" href="/AdminSide/Action_page/CSS/Add-product.css">
+    <link rel="stylesheet" href="/AdminSide/CSS/container.css">
+    <title>VIEW ADMIN</title>
+</head>
+<body>
+  <nav class="container-sidebar">
+    <div class="sidebar">
+      <div class="title">
+        <img src="LOGO.png" alt="PUMA LOGO" />
+        <p>PUMA DASHBOARD</p>
+      </div>
+      <hr />
+      <div class="title-page">
+        <p>MENU</p>
+      </div>
+      <div class="mega-list">
+        <div class="list-component">
+          <i class="icon ph-bold ph-house"></i>
+          <p>Dashboard</p>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Dashboard">Homepage</a>
+        </div>
+      </div>
+      <div class="mega-list">
+        <div class="list-component">
+          <i class="icon ph-bold ph-user"></i>
+          <p>Account Management</p>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Admin_Info">All Admin</a>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Search_Admin">Search Admin</a>
+        </div>
+      </div>
+      <div class="mega-list">
+        <div class="list-component">
+          <i class="icon ph-bold ph-chart-bar"></i>
+
+          <p>Product Management</p>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Product_Info">All Product</a>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Search_Product">Search Product</a>
+        </div>
+      </div>
+      <div class="exit">
+        <i class="icon ph-bold ph-sign-out"></i>
+        <a href="/login">Logout</a>
+      </div>
+    </div>
+  </nav>
+    <section class="container">
+        <div class="title-main">
+        </div>
+        <div class="content-container">
+            <div class="header-content">
+                <div class="title">
+                    Detail Product
+                </div>
+                <div class="back-button">
+                    <a href="/AdminSide/Search_Product"><button>Back</button></a>
+                </div>
+            </div>
+            <form id="addProduct" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="productname">Product Name</label>
+                <input name="productname" type="text" id="productname" readonly>
+                <label for="producttype">Product Type</label>
+                <input name="producttype" type="text" id="producttype" readonly>
+
+              </div>
+              <div class="form-group">
+                <label for="productprice">Product Price</label>
+                <input name="productprice" type="text" id="productprice" readonly>
+                <label for="Collection">Collection</label>
+                <input name="productcollection" type="text" id="productcollection" readonly>
+
+              </div>
+              <div class="form-group">
+                <label>Gender</label>
+                <div class="gender-options">
+                  <label><input type="radio" id="gender" name="gender" value="M" readonly> Male</label>
+                  <label><input type="radio" id="gender" name="gender" value="F" readonly> Female</label>
+                  <label><input type="radio" id="gender" name="gender" value="U" readonly> Unisex</label>
+                </div>
+                <label for="productdescrition">Product Description</label>
+                <input name="productdescription" type="text" id="productdescription" readonly>
+              </div>
+              <div class="form-group">
+                <div class="profile-picture">
+                  <img src="https://via.placeholder.com/100" id="preview" src="" alt="Image Preview">
+            </form>
+    </section>
+
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const product_ID = urlParams.get("product_ID");
+  const token = localStorage.getItem("token");
+  if (product_ID) {
+    showProductWS_WithID(product_ID,token);
+} else {
+    alert("Admin ID is missing from the URL.");
+}
+  async function showProductWS_WithID(product_ID,token){
+    const response = await fetch(`http://localhost:5001/api_service/showProduct/${product_ID}`, {
+      method:"GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    if(!response.ok){
+      alert("Failed to fetch product data");
+    }
+    const data = await response.json();
+    console.log(data);
+    if (data.success) {
+      fillForm(data.data[0]);
+    } else {
+      alert("No product data found.");
+    }
+  }
+
+  function fillForm(productData){
+    document.getElementById("productname").value = productData.product_name;
+    document.getElementById("producttype").value = productData.product_type; // เปลี่ยนจาก product_name เป็น product_type
+    document.getElementById("productcollection").value = productData.product_collection; // เปลี่ยนให้ตรงกับข้อมูล
+    document.getElementById("productprice").value = productData.product_price; // เปลี่ยนให้ตรงกับข้อมูล
+    if (productData.gender === "M") { // เปลี่ยน Gender ให้ตรงกับ field
+      document.querySelector("input[name='gender'][value='M']").checked = true;
+    } else if (productData.gender === "F") {
+      document.querySelector("input[name='gender'][value='F']").checked = true;
+    } else if (productData.gender === "U") {
+      document.querySelector("input[name='gender'][value='U']").checked = true;
+    }
+    document.getElementById("productdescription").value = productData.product_description; // แก้ให้ตรงกับ field product_description
+    const preview = document.getElementById("preview");
+    preview.src = `http://localhost:5001/upload/${productData.image}`;
+}
+</script>
+</body>
+</html>

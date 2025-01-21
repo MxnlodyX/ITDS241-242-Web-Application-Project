@@ -1,0 +1,47 @@
+#myTable thead th {
+    background-color: #ffa600;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid black;
+}
+#myTable tbody td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+#myTable tbody tr:hover {
+    background-color: #f2f2f2;
+}
+#myTable tbody td, #myTable thead th {
+    text-align: center;
+}
+
+td.action{
+    width: 20%;
+}
+td.action .edit{
+    padding: 5px;
+    background: linear-gradient(to right, #fe9365, #feb798);
+    color: white;
+    margin: 2px;
+    border-radius: 10%;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+}
+td.action .delete{
+    padding: 6px;
+    background: linear-gradient(to right, #fe5d70, #fe909d);
+    color: white;
+    margin: 2px;
+    border-radius: 10%;
+    border: none;
+    cursor: pointer;
+
+}
+.dataTables_length , .dataTables_filter {
+margin-bottom: 20px;
+}
+.dataTables_info , .dataTables_paginate , .paging_simple_numbers{
+    margin-top: 20px;
+}

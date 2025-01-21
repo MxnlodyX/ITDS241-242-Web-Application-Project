@@ -1,0 +1,109 @@
+.form-group {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: center;
+    gap: 15px;
+}
+
+.form-group label {
+    width: 120px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.profile-picture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+    object-position: top;
+}
+
+.profile-picture button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.button-group button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+
+
+.Edit_btn {
+    background: linear-gradient(to right, #0ac282, #0df3a3);
+    color: white;
+    font-weight: bold;
+    padding: 13px;
+    border: none;
+    border-radius: 10%;
+}
+
+.gender-options {
+    display: flex;
+    flex-direction: row;
+    margin-right: 25%;
+}
+
+.gender-options input[type='radio'] {
+    margin-left: 20%;
+    padding: 15px;
+}
+
+.form-group input[type="text"] {
+    width: 40%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.gender-options {
+    display: flex;
+    gap: 10px;
+}
+
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.back-button a {
+    padding: 10px;
+    border-radius: 15px;
+    border: none;
+    background: linear-gradient(to right, #fe5d70, #fe909d);
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}

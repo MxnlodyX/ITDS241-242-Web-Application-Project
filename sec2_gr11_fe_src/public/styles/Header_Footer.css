@@ -1,0 +1,264 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+}
+
+body {
+    background-color: #ffffff;
+    font-family: monospace;
+}
+
+header {
+    background-color: rgb(6, 15, 41);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    padding: 0px 50px 0px 50px;
+}
+
+header .logo {
+    height: 100%;
+    width: 5%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+header .shipping-text {
+    width: 10%;
+    margin-left: 15px;
+}
+
+header .shipping-text p {
+    color: rgb(255, 255, 255);
+}
+
+header .logo img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+header .search {
+    display: flex;
+    width: 40%;
+    align-items: center;
+    position: relative;
+}
+
+header .search input.search-box {
+    padding: 12px;
+    border-radius: 10px 0 0 15px;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+header .search button.search-btn {
+    background-color: #febd69;
+    border: none;
+    padding: 10.5px;
+    padding-left: 15px;
+    border-radius: 0 10px 10px 0;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    align-items: center;
+}
+
+header .search button.search-btn i {
+    font-size: 18px;
+}
+
+header .login {
+    margin-left: auto;
+    display: flex;
+    align-items: center
+}
+
+header .login a {
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-right: 20px;
+    background-color: rgba(203, 213, 223, 0.11);
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+header .login a:hover {
+    background-color: rgba(157, 233, 242, 0.773);
+    transition: 0.5s;
+}
+
+nav {
+    padding: 10px;
+    background-color: #101038e8;
+
+
+}
+
+nav ul {
+    display: flex;
+    margin-left: 40px;
+    margin-right: 70px;
+}
+
+nav ul li {
+    list-style: none;
+}
+
+nav ul li a {
+    padding: 0px 20px 0px 20px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    color: rgb(192, 226, 243);
+    transition: 0.3s;
+}
+
+nav ul li.Shopping-Cart {
+    position: relative;
+    right: 0;
+    margin-left: auto;
+    color: white;
+    z-index: 10;
+}
+
+/* สไตล์พื้นฐานสำหรับ .order-details */
+nav ul li.Shopping-Cart .order-details {
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    margin-top: 5px;
+    right: 0px;
+    padding: 30px;
+    width: 350px;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    z-index: 10;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: none;
+    /* ซ่อนค่าเริ่มต้น */
+}
+
+/* ลูกศรด้านบน */
+nav ul li.Shopping-Cart .order-details .arrow-up {
+    top: -10px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 5px solid rgb(255, 255, 255);
+    position: absolute;
+    margin-top: 5px;
+    right: 25px;
+}
+
+/* สไตล์เพิ่มเติม */
+nav ul li.Shopping-Cart .order-details p.Lasted {
+    color: rgb(75, 74, 74);
+}
+
+nav ul li.Shopping-Cart .order-details {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    border: 1px solid black;
+}
+
+/* ปุ่ม */
+nav ul li.Shopping-Cart .order-details button {
+    padding: 10px;
+    background-color: #1C1C42;
+    float: right;
+    cursor: pointer;
+    color: white;
+    margin-top: 12px;
+}
+
+/* กล่องสินค้าในตะกร้า */
+nav ul li.Shopping-Cart .order-details .Product-Cart {
+    display: flex;
+    flex-direction: row;
+    gap: 15%;
+    margin-top: 15px;
+    align-items: center;
+}
+
+/* Hover สินค้า */
+nav ul li.Shopping-Cart .order-details .Product-Cart:hover {
+    background-color: rgba(78, 78, 78, 0.089);
+    padding: 10px;
+}
+
+/* ชื่อสินค้าและราคา */
+nav ul li.Shopping-Cart .order-details .Product-Cart .Product-name,
+nav ul li.Shopping-Cart .order-details .Product-Cart .Product-Price {
+    color: black;
+}
+
+/* รูปสินค้า */
+nav ul li.Shopping-Cart .order-details .Product-Cart .Product-img {
+    width: 60px;
+    height: 60px;
+}
+
+nav ul li.Shopping-Cart .order-details .Product-Cart .Product-img img {
+    max-height: 60px;
+    height: auto;
+    object-fit: cover;
+}
+
+nav ul li.Shopping-Cart .order-details .Product-Cart .Product-name {
+    font-size: 15px;
+    margin-right: auto;
+}
+
+nav ul li.Shopping-Cart .order-details .Product-Cart .Product-Price {
+    font-size: 15px;
+    margin-left: auto;
+}
+
+/* แสดง .order-details เมื่อ hover */
+nav ul li.Shopping-Cart:hover .order-details {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* กรณีต้องการแสดงด้วย class .show */
+nav ul li.Shopping-Cart .order-details.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+footer {
+    margin-top: 5%;
+    width: 100%;
+    padding: 25px;
+    background-color: rgb(6, 15, 41);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}

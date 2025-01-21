@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/AdminSide/CSS/sidebar_els.css">
+    <link rel="stylesheet" href="/AdminSide/Action_page/CSS/Add-user.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/AdminSide/CSS/container.css">
+
+   
+    
+    <title>ADD ADMIN</title>
+</head>
+<body>
+  <nav class="container-sidebar">
+    <div class="sidebar">
+      <div class="title">
+        <img src="LOGO.png" alt="PUMA LOGO" />
+        <p>PUMA DASHBOARD</p>
+      </div>
+      <hr />
+      <div class="title-page">
+        <p>MENU</p>
+      </div>
+      <div class="mega-list">
+        <div class="list-component">
+          <i class="icon ph-bold ph-house"></i>
+          <p>Dashboard</p>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Dashboard">Homepage</a>
+        </div>
+      </div>
+      <div class="mega-list">
+        <div class="list-component">
+          <i class="icon ph-bold ph-user"></i>
+          <p>Account Management</p>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Admin_Info">All Admin</a>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Search_Admin">Search Admin</a>
+        </div>
+      </div>
+      <div class="mega-list">
+        <div class="list-component">
+          <i class="icon ph-bold ph-chart-bar"></i>
+
+          <p>Product Management</p>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Product_Info">All Product</a>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Search_Product">Search Product</a>
+        </div>
+      </div>
+      <div class="exit">
+        <i class="icon ph-bold ph-sign-out"></i>
+        <a href="/login">Logout</a>
+      </div>
+    </div>
+  </nav>
+    <section class="container">
+        <div class="title-main">
+        </div>
+        <div class="content-container">
+            <div class="header-content">
+                <div class="title">
+                    Add Admin Account
+                </div>
+                <div class="back-button">
+                    <a href="/AdminSide/Admin_Info"><button>Back</button></a>
+                </div>
+            </div>
+                <form id="addAccount" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="username">Email</label>
+                        <input name="email" type="text" id="email" placeholder="Enter Email" required>
+                        <label for="username">Username</label>
+                        <input name="username" type="text" id="username" placeholder="Enter Username" required>
+                        <label for="password">Password</label>
+                        <input name="password" type="text" id="password" placeholder="Enter Password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname">First Name</label>
+                        <input name="first_name" type="text" id="firstname" placeholder="Enter Firstname" required>
+                        <label for="lastname">Last Name</label>
+                        <input name="last_name" type="text" id="lastname" placeholder="Enter Lastname" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="gender-options">
+                            <label>Gender</label>
+                            <input type="radio" id="gender" name="gender" value="M"> Male
+                            <input type="radio" id="gender" name="gender" value="F"> Female
+                        </div>
+                        <label for="telnumber">Tel-number</label>
+                        <input name="tel_number" type="text" id="tel_number" pattern="[0-9]{10}" maxlength="10" placeholder="Enter Tel-Number" required>
+                      </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input name="address" type="text" id="address" placeholder="Enter Address" required>
+                        <label for="position">Position</label>
+                        <input name="position" type="text" id="position" placeholder="Enter Position" required>
+                    </div>
+                    <div class="profile-picture">
+                        <img src="https://via.placeholder.com/100" id="preview" src="" alt="Image Preview" >
+                        <input name="profile_image" type="file" id="imageUpload" style="padding: 10px 20px;background-color: #007bff;color: #fff;border: none;border-radius: 5px;cursor: pointer;" required>
+                    </div>
+                    <div class="btn-action-group">
+                      <button class="Create_btn">CREATE DATA</button>
+                    </div>
+                </form>
+    </section>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+    const imageUpload = document.getElementById('imageUpload');
+    const preview = document.getElementById('preview');
+
+    imageUpload.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+<script>
+
+  async function adminDataInsertWS(token, url, datasent) {
+
+    const formData = new FormData();
+    // เพิ่มข้อมูลลงใน FormData
+    formData.append("email", datasent.email);
+    formData.append("username", datasent.username);
+    formData.append("password", datasent.password);
+    formData.append("first_name", datasent.first_name);
+    formData.append("last_name", datasent.last_name);
+    formData.append("gender", datasent.gender);
+    formData.append("tel_number", datasent.tel_number);
+    formData.append("address", datasent.address);
+    formData.append("position", datasent.position);
+    formData.append("profile_image", datasent.profile_image);
+    let response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData, 
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      alert("Admin added successfully!");
+      return data; 
+    } else {
+      alert(`Failed to add admin: ${data.message}`);
+      return null; 
+    }
+  }
+
+  document.querySelector(".Create_btn").addEventListener("click", async (event) => {
+    event.preventDefault(); // ป้องกัน default form submit
+
+    const token = localStorage.getItem("token");
+    const url = "http://localhost:5001/api_service/InsertAdmin";
+
+    const datasent = {
+      email: document.getElementById("email").value,
+      username: document.getElementById("username").value,
+      password: document.getElementById("password").value,
+      first_name: document.getElementById("firstname").value,
+      last_name: document.getElementById("lastname").value,
+      gender: document.querySelector("input[name='gender']:checked")?.value,
+      tel_number: document.getElementById("tel_number").value,
+      address: document.getElementById("address").value,
+      position: document.getElementById("position").value,
+      profile_image: document.getElementById("imageUpload").files[0], // ไฟล์รูปภาพ
+    };
+    const result = await adminDataInsertWS(token, url, datasent);
+
+    if (result) {
+      window.location.href = "/AdminSide/Admin_Info";
+    }
+  });
+</script>
+</body>
+</html>

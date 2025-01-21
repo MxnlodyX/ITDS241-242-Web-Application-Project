@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/AdminSide/CSS/sidebar_els.css">
+    <link rel="stylesheet" href="/AdminSide/Action_page/CSS/edit-admin.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/AdminSide/CSS/container.css">
+
+   
+    
+    <title>EDIT ADMIN</title>
+</head>
+<body>
+  <nav class="container-sidebar">
+    <div class="sidebar">
+      <div class="title">
+        <img src="LOGO.png" alt="PUMA LOGO" />
+        <p>PUMA DASHBOARD</p>
+      </div>
+      <hr />
+      <div class="title-page">
+        <p>MENU</p>
+      </div>
+      <div class="mega-list">
+        <div class="list-component">
+          <i class="icon ph-bold ph-house"></i>
+          <p>Dashboard</p>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Dashboard">Homepage</a>
+        </div>
+      </div>
+      <div class="mega-list">
+        <div class="list-component">
+          <i class="icon ph-bold ph-user"></i>
+          <p>Account Management</p>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Admin_Info">All Admin</a>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Search_Admin">Search Admin</a>
+        </div>
+      </div>
+      <div class="mega-list">
+        <div class="list-component">
+          <i class="icon ph-bold ph-chart-bar"></i>
+
+          <p>Product Management</p>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Product_Info">All Product</a>
+        </div>
+        <div class="sub-list-component">
+          <a href="/AdminSide/Search_Product">Search Product</a>
+        </div>
+      </div>
+      <div class="exit">
+        <i class="icon ph-bold ph-sign-out"></i>
+        <a href="/login">Logout</a>
+      </div>
+    </div>
+  </nav>
+    <section class="container">
+        <div class="title-main">
+        </div>
+        <div class="content-container">
+            <div class="header-content">
+                <div class="title">
+                    Edit Admin Account
+                </div>
+                <div class="back-button">
+                    <a href="/AdminSide/Admin_Info"><button>Back</button></a>
+                </div>
+            </div>
+            <form id="editForm" method="POST">
+              <div class="form-group">
+                <label for="username">Email</label>
+                <input type="text" id="email" name="email" placeholder="Enter Email">
+                  <label for="username">Username</label>
+                  <input type="text" id="username" name="username" placeholder="Enter Username">
+                  <label for="password">Password</label>
+                  <input type="text" id="password" name="password" placeholder="Enter Password">
+              </div>
+              <div class="form-group">
+                  <label for="firstname">First Name</label>
+                  <input type="text" id="firstname" name="firstname"placeholder="Enter Firstname">
+                  <label for="lastname">Last Name</label>
+                  <input type="text" id="lastname" name="lastname"placeholder="Enter Lastname">
+              </div>
+              <div class="form-group">
+                  <div class="gender-options">
+                      <label>Gender</label>
+                      <input type="radio" name="gender" value="M"> Male
+                      <input type="radio" name="gender" value="F"> Female
+                  </div>
+                  <label for="tel_number">Tel-number</label>
+                  <input type="text" id="tel_number" placeholder="Enter Tel-Number">
+              </div>
+              <div class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" id="address" placeholder="Enter Address">
+                  <label for="position">Position</label>
+                  <input type="text" id="position" placeholder="Enter Position">
+              </div>
+              <div class="profile-picture">
+                  <img src="https://via.placeholder.com/100" id="preview" alt="Image Preview">
+                  <input type="file" id="imageUpload" accept="image/*"style="padding: 10px 20px;background-color: #007bff;color: #fff;border: none;border-radius: 5px;cursor: pointer;">
+              </div>
+              <div class="btn-action-group">
+                  <button type="button" class="Edit_btn">EDIT DATA</button>
+              </div>
+          </form>
+    </section>
+
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+   <!-- JavaScript for Image Preview -->
+    <script>
+    const imageUpload = document.getElementById('imageUpload');
+    const preview = document.getElementById('preview');
+
+    imageUpload.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script> 
+<script>
+  const urlParams = new URLSearchParams(window.location.search); // ดึง query parameters จาก URL
+  const Admin_ID = urlParams.get("Admin_ID"); // ดึงค่า Admin_ID จาก URL
+  const token = localStorage.getItem("token");
+  if (Admin_ID) {
+    showAdminWS_WithID(Admin_ID,token); // เรียกฟังก์ชันพร้อมส่ง Admin_ID
+} else {
+    alert("Admin ID is missing from the URL."); // แจ้งเตือนหากไม่มี Admin_ID
+}
+  async function showAdminWS_WithID(adminID,token){
+    const response = await fetch(`http://localhost:5001/api_service/adminInfo/${adminID}`, {
+      method:"GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    if(!response.ok){
+      alert("Failed to fetch admin data");
+    }
+    const data = await response.json();
+    if (data.success) {
+      fillForm(data.data[0]); // เติมข้อมูลลงในฟอร์ม
+    } else {
+      alert("No admin data found.");
+    }
+  }
+  function fillForm(adminData) {
+    document.getElementById("email").value = adminData.email;
+    document.getElementById("username").value = adminData.username;
+    document.getElementById("password").value = adminData.password;
+    document.getElementById("firstname").value = adminData.f_name;
+    document.getElementById("lastname").value = adminData.l_name;
+    document.getElementById("tel_number").value = adminData.tel_number;
+    document.getElementById("address").value = adminData.Address;
+    document.getElementById("position").value = adminData.position;
+
+    if (adminData.Gender === "M") {
+      document.querySelector("input[name='gender'][value='M']").checked = true;
+    } else if (adminData.Gender === "F") {
+      document.querySelector("input[name='gender'][value='F']").checked = true;
+    }
+    const preview = document.getElementById("preview");
+    preview.src = `http://localhost:5001/upload/${adminData.profile_image}`;
+  }
+
+  async function adminDataUpdateWS(adminID,token,url,DataUpdate){
+    const formData = new FormData();
+
+    formData.append("email", DataUpdate.email);
+    formData.append("username", DataUpdate.username);
+    formData.append("password", DataUpdate.password);
+    formData.append("first_name", DataUpdate.first_name);
+    formData.append("last_name", DataUpdate.last_name);
+    formData.append("gender", DataUpdate.gender);
+    formData.append("tel_number", DataUpdate.tel_number);
+    formData.append("address", DataUpdate.address);
+    formData.append("position", DataUpdate.position);
+
+    if (DataUpdate.profile_image) {
+      formData.append("profile_image", DataUpdate.profile_image);
+    }
+    const response = await fetch(url, {
+      method:"PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+    if(data.success){
+      alert("Admin updated successfully!")
+      return data;
+    }else{
+      alert(`Failed to update admin : ${data.message}`);
+    }
+  }
+
+  document.querySelector(".Edit_btn").addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    const token = localStorage.getItem("token");
+    const url = `http://localhost:5001/api_service/UpdateAdmin/${Admin_ID}`;
+
+    const dataUpdate = {
+      email: document.getElementById("email").value,
+      username: document.getElementById("username").value,
+      password: document.getElementById("password").value,
+      first_name: document.getElementById("firstname").value,
+      last_name: document.getElementById("lastname").value,
+      gender: document.querySelector("input[name='gender']:checked")?.value,
+      tel_number: document.getElementById("tel_number").value,
+      address: document.getElementById("address").value,
+      position: document.getElementById("position").value,
+      profile_image: document.getElementById("imageUpload").files[0]
+    };
+
+    const result = await adminDataUpdateWS(Admin_ID,token, url, dataUpdate);
+    if (result) {
+      window.location.href = "/AdminSide/Admin_Info";
+    }
+  });
+</script>
+</body>
+</html>

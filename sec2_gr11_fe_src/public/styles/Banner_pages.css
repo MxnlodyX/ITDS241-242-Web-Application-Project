@@ -1,0 +1,19 @@
+section.Banner_Page {
+  position: relative;
+  width: 100%;
+  height: 25vh;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(100, 70, 235, 0.253)),
+    url('../Assets/Banners/papers.co-ae40-running-puma-black-illust-art-minimal-25-wallpaper.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+section.Banner_Page h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 3rem;
+  text-shadow: 2px 2px 2px black;
+}

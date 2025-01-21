@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/AdminSide/CSS/sidebar_els.css" />
+    <link rel="stylesheet" href="/AdminSide/CSS/container.css" />
+    <link rel="stylesheet" href="/AdminSide/Action_page/CSS/search-page.css" />
+    <style>
+    a#VIEW{
+        text-decoration: none;
+        padding: 6px;
+        background-color: rgb(60, 65, 145);
+        color: white;
+        border-radius: 12px;
+    }
+    #display_notfound{
+        display: flex;
+        justify-content:center;
+        }
+    #displpay_notfound h1{
+        margin-top: 25px;
+    }
+</style>
+    <title>PUMA SEARCH ADMIN</title>
+  </head>
+  <body>
+    <nav class="container-sidebar">
+      <div class="sidebar">
+        <div class="title">
+          <img src="LOGO.png" alt="PUMA LOGO" />
+          <p>PUMA DASHBOARD</p>
+        </div>
+        <hr />
+        <div class="title-page">
+          <p>MENU</p>
+        </div>
+        <div class="mega-list">
+          <div class="list-component">
+            <i class="icon ph-bold ph-house"></i>
+            <p>Dashboard</p>
+          </div>
+          <div class="sub-list-component">
+            <a href="/AdminSide/Dashboard">Homepage</a>
+          </div>
+        </div>
+        <div class="mega-list">
+          <div class="list-component">
+            <i class="icon ph-bold ph-user"></i>
+            <p>Account Management</p>
+          </div>
+          <div class="sub-list-component">
+            <a href="/AdminSide/Admin_Info">All Admin</a>
+          </div>
+          <div class="sub-list-component">
+            <a href="/AdminSide/Search_Admin">Search Admin</a>
+          </div>
+        </div>
+        <div class="mega-list">
+          <div class="list-component">
+            <i class="icon ph-bold ph-chart-bar"></i>
+
+            <p>Product Management</p>
+          </div>
+          <div class="sub-list-component">
+            <a href="/AdminSide/Product_Info">All Product</a>
+          </div>
+          <div class="sub-list-component">
+            <a href="/AdminSide/Search_Product">Search Product</a>
+          </div>
+        </div>
+        <div class="exit">
+          <i class="icon ph-bold ph-sign-out"></i>
+          <a href="/login">Logout</a>
+        </div>
+      </div>
+    </nav>
+    <section class="container">
+      <div class="title-main">
+      </div>
+      <div class="content-container">
+        <div class="header-content">
+          <div class="title">
+            Search Product
+          </div>
+        </div>
+        <form id="searchForm">
+          <div class="form-group">
+            <label for="productname">Search by Name:</label>
+            <input type="text" id="productname"
+              placeholder="Enter name to search" />
+          </div>
+          <div class="form-group">
+            <label for="producttype">Search by Product Type:</label>
+            <select id="producttype" style="height:44px; border-radius:5px;">
+              <option value="" selected></option>
+              <option value="Sneaker"> Sneaker</option>
+              <option value="Shirt"> T-Shirt</option>
+              <option value="Hat"> Hat</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="gender">Search by Gender:</label>
+            <select id="gender" style="height:44px; border-radius:5px;">
+              <option value="" selected></option>
+              <option value="M"> Male</option>
+              <option value="F"> Femal</option>
+              <option value="U"> Unisex</option>
+            </select>
+          </div>
+          <button type="button" id="searchBtn">Search</button>
+        </form>
+        <div class="result-table">
+          <h2>Search Results</h2>
+          <table id="resultsTable">
+            <thead>
+              <tr>
+                <th>PID</th>
+                <th>Product Name</th>
+                <th>Product Type</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="searchResultsBody">
+
+            </tbody>
+          </table>
+          <div id="display_notfound">
+          </div>
+        </div>
+      </section>
+
+      <script src="https://unpkg.com/@phosphor-icons/web"></script>
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
+      <script>
+        function renderResults(results) {
+            const noData = document.getElementById('display_notfound');
+            const tableBody = document.getElementById('searchResultsBody');
+            tableBody.innerHTML = '';
+            if(results.length > 0){
+                results.forEach((Product) => {
+                    const row = `
+                        <tr>
+                            <td>${Product.product_ID}</td>
+                            <td>${Product.product_name}</td>
+                            <td>${Product.product_type}</td>
+                            <td>${Product.product_price}</td>
+                            <td>
+                                <img
+                                  src="http://localhost:5001/upload/${Product.image}"
+                                  alt="Profile Image"
+                                  width="70"
+                                  height="70"
+                                  style="border-radius:50px; object-fit:cover; object-position: top;">
+                            </td>
+                            <td>
+                              <a href="/AdminSide/View_Product?product_ID=${Product.product_ID}" id="VIEW">VIEW</a>
+                            </td>
+
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            }
+        }
+        async function searchProductWS(token, url, params) {
+                const query = new URLSearchParams(params).toString();
+                const response = await fetch(`${url}?${query}`, {
+                    method: 'GET',
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    return data.data;
+                } else {
+                    alert('No results found.');
+                    return [];
+                }
+        }
+        document.getElementById('searchBtn').addEventListener('click', async () => {
+            const productname = document.getElementById('productname').value;
+            const producttype = document.getElementById('producttype').value;
+            const gender = document.getElementById('gender').value;
+            const url = 'http://localhost:5001/api_service/searchProduct';
+            const token = localStorage.getItem('token');
+            const params = { productname, producttype, gender };
+            const results = await searchProductWS(token, url, params);
+            renderResults(results);
+        });
+    </script>
+    </body>
+  </html>
