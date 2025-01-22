@@ -7,8 +7,7 @@
 - **Final Grade:** A (for both subjects)
   
 ## Overview
-This project is a **Puma Shop Web Application**, developed as part of the coursework for the **Web Technologies and Application   
-& Web Technologies and Application Lab** subjects. I developed with my group to complete this project   
+This project is a **Puma Shop Web Application**, developed as part of the coursework for the **Web Technologies and Application & Web Technologies and Application Lab** subjects. I developed with my group to complete this project   
 and I took on the role of a **Full-stack Developer**.
 ## Technologies Used
 This project was developed using the following technologies:
